@@ -42,3 +42,8 @@
 
   echo $contact->send();
 ?>
+
+<!-- Display phone number on the website -->
+<div style="margin-top:20px; font-size:18px;">
+  <strong>Phone:</strong> +251930235374
+</div>
