@@ -1,5 +1,5 @@
----
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/birukmbz/public_html/
-    - /bin/cp -r * $DEPLOYPATH
+    - export DEPLOYPATH=/home/birukmbz/public_html/portfolio
+    - mkdir -p $DEPLOYPATH
+    - /bin/cp -r . $DEPLOYPATH
