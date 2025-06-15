@@ -1,5 +1,4 @@
+---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/birukmbz/public_html/portfolio
-    - mkdir -p $DEPLOYPATH
-    - /bin/cp -r . $DEPLOYPATH
+    - echo "Deployment triggered. No file movement needed. Files are already in the document root."
