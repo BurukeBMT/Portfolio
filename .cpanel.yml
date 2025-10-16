@@ -1,0 +1,4 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/birukmbz/public_html/
+    - /bin/cp -r /home/birukmbz/repositories/myPortfolioWebsite/* $DEPLOYPATH
