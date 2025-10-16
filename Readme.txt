@@ -1,6 +1,6 @@
 Thanks for downloading this template!
 
-Template Name: Biruk Portfolio
-Template URL: https://birukportfolio.birukmaedot.com
-Author: Biruk Maedot
+Template Name: iPortfolio
+Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
+Author: BootstrapMade.com
 License: https://bootstrapmade.com/license/

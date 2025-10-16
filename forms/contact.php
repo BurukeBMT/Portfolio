@@ -6,8 +6,8 @@
   * For more info and help: https://bootstrapmade.com/php-email-form/
   */
 
-  // Replace  with your real receiving email address
-  $receiving_email_address = 'burukmaedot24@gmail.com';
+  // Replace contact@example.com with your real receiving email address
+  $receiving_email_address = 'contact@example.com';
 
   if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
     include( $php_email_form );
@@ -35,15 +35,7 @@
 
   $contact->add_message( $_POST['name'], 'From');
   $contact->add_message( $_POST['email'], 'Email');
-  if(isset($_POST['phone'])) {
-    $contact->add_message( $_POST['phone'], 'Phone');
-  }
   $contact->add_message( $_POST['message'], 'Message', 10);
 
   echo $contact->send();
 ?>
-
-<!-- Display phone number on the website -->
-<div style="margin-top:20px; font-size:18px;">
-  <strong>Phone:</strong> +251930235374
-</div>
