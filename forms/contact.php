@@ -1,7 +1,12 @@
 <?php
 
-// Set content type for AJAX response
-header('Content-Type: application/json');
+// Check if this is an AJAX request
+$is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+
+// Set content type based on request type
+if ($is_ajax) {
+  header('Content-Type: application/json');
+}
 
 // Check if form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -14,13 +19,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // Validate required fields
   if (empty($name) || empty($email) || empty($subject) || empty($message)) {
-    echo json_encode(['error' => 1, 'message' => 'All fields are required.']);
+    if ($is_ajax) {
+      echo json_encode(['error' => 1, 'message' => 'All fields are required.']);
+    } else {
+      // Redirect back with error
+      header('Location: ../index.html?status=error&message=' . urlencode('All fields are required.'));
+    }
     exit;
   }
 
   // Validate email
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    echo json_encode(['error' => 1, 'message' => 'Invalid email address.']);
+    if ($is_ajax) {
+      echo json_encode(['error' => 1, 'message' => 'Invalid email address.']);
+    } else {
+      // Redirect back with error
+      header('Location: ../index.html?status=error&message=' . urlencode('Invalid email address.'));
+    }
     exit;
   }
 
@@ -41,13 +56,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // Send email
   if (mail($to, $email_subject, $email_body, $headers)) {
-    echo json_encode(['error' => 0, 'message' => 'OK']);
+    if ($is_ajax) {
+      echo json_encode(['error' => 0, 'message' => 'OK']);
+    } else {
+      // Redirect back with success
+      header('Location: ../index.html?status=success&message=' . urlencode('Message sent successfully!'));
+    }
   } else {
-    echo json_encode(['error' => 1, 'message' => 'Failed to send message. Please try again.']);
+    if ($is_ajax) {
+      echo json_encode(['error' => 1, 'message' => 'Failed to send message. Please try again.']);
+    } else {
+      // Redirect back with error
+      header('Location: ../index.html?status=error&message=' . urlencode('Failed to send message. Please try again.'));
+    }
   }
 
 } else {
-  echo json_encode(['error' => 1, 'message' => 'Invalid request method.']);
+  if ($is_ajax) {
+    echo json_encode(['error' => 1, 'message' => 'Invalid request method.']);
+  } else {
+    // Redirect back
+    header('Location: ../index.html');
+  }
 }
 
 ?>

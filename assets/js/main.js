@@ -209,11 +209,9 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
   /**
-   * EmailJS Contact Form
+   * Contact Form Handler
    */
   (function() {
-    emailjs.init('KBJhXOxhFpcHYmmx3');
-
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
       contactForm.addEventListener('submit', function(event) {
@@ -232,29 +230,35 @@
 
         // Get form data
         const formData = new FormData(contactForm);
-        const templateParams = {
-          name: formData.get('name'),
-          email: formData.get('email'),
-          subject: formData.get('subject'),
-          message: formData.get('message')
-        };
 
-        // Send email
-        emailjs.send('service_wc7xlb5', 'template_14yinyh', templateParams)
-          .then(function(response) {
-            console.log('SUCCESS!', response.status, response.text);
-            loadingDiv.style.display = 'none';
+        // Send via fetch to PHP backend
+        fetch('forms/contact.php', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          loadingDiv.style.display = 'none';
+          if (data.error === 0) {
             sentDiv.style.display = 'block';
             contactForm.reset();
-          }, function(error) {
-            console.log('FAILED...', error);
-            loadingDiv.style.display = 'none';
+          } else {
             errorDiv.style.display = 'block';
-            errorDiv.textContent = 'Failed to send message. Please try again.';
-          })
-          .finally(function() {
-            submitButton.disabled = false;
-          });
+            errorDiv.textContent = data.message || 'Failed to send message. Please try again.';
+          }
+        })
+        .catch(error => {
+          console.log('FAILED...', error);
+          loadingDiv.style.display = 'none';
+          errorDiv.style.display = 'block';
+          errorDiv.textContent = 'Failed to send message. Please try again.';
+        })
+        .finally(function() {
+          submitButton.disabled = false;
+        });
       });
     }
   })();
