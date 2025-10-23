@@ -576,7 +576,7 @@
           </div>
 
           <div class="col-lg-7">
-            <form id="contact-form" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            <form id="contact-form" action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
               <div class="row gy-4">
 
                 <div class="col-md-6">
@@ -596,6 +596,7 @@
 
                 <div class="col-md-12">
                   <label for="message-field" class="pb-2">Message</label>
+                  <textarea class="form-control" name="message" rows="6" placeholder="Enter your message here..." required></textarea>
                 </div>
 
                 <div class="col-md-12 text-center">
