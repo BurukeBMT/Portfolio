@@ -1,34 +1,53 @@
 <?php
 
-  $receiving_email_address = 'burukmaedot24@gmail.com';
+// Set content type for AJAX response
+header('Content-Type: application/json');
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
+// Check if form was submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+  // Get form data
+  $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+  $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+  $subject = isset($_POST['subject']) ? trim($_POST['subject']) : '';
+  $message = isset($_POST['message']) ? trim($_POST['message']) : '';
+
+  // Validate required fields
+  if (empty($name) || empty($email) || empty($subject) || empty($message)) {
+    echo json_encode(['error' => 1, 'message' => 'All fields are required.']);
+    exit;
   }
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
+  // Validate email
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(['error' => 1, 'message' => 'Invalid email address.']);
+    exit;
+  }
 
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
+  // Email configuration
+  $to = 'burukmaedot24@gmail.com';
+  $email_subject = "Portfolio Contact: " . $subject;
+  $email_body = "You have received a new message from your portfolio contact form.\n\n";
+  $email_body .= "Name: " . $name . "\n";
+  $email_body .= "Email: " . $email . "\n";
+  $email_body .= "Subject: " . $subject . "\n\n";
+  $email_body .= "Message:\n" . $message . "\n\n";
+  $email_body .= "--\nThis email was sent from your portfolio contact form.";
 
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['message'], 'Message', 10);
+  // Email headers
+  $headers = "From: " . $email . "\r\n";
+  $headers .= "Reply-To: " . $email . "\r\n";
+  $headers .= "X-Mailer: PHP/" . phpversion();
 
-  echo $contact->send();
+  // Send email
+  if (mail($to, $email_subject, $email_body, $headers)) {
+    echo json_encode(['error' => 0, 'message' => 'OK']);
+  } else {
+    echo json_encode(['error' => 1, 'message' => 'Failed to send message. Please try again.']);
+  }
+
+} else {
+  echo json_encode(['error' => 1, 'message' => 'Invalid request method.']);
+}
+
 ?>
