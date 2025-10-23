@@ -1,7 +1,7 @@
 <?php
 
 // Check if this is an AJAX request
-$is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+$is_ajax = isset($_POST['ajax']) && $_POST['ajax'] == '1';
 
 // Set content type based on request type
 if ($is_ajax) {

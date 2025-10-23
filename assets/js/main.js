@@ -230,14 +230,12 @@
 
         // Get form data
         const formData = new FormData(contactForm);
+        formData.append('ajax', '1');
 
         // Send via fetch to PHP backend
         fetch('forms/contact.php', {
           method: 'POST',
-          body: formData,
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-          }
+          body: formData
         })
         .then(response => response.json())
         .then(data => {
