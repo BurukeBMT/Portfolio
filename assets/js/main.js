@@ -208,4 +208,55 @@
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
 
+  /**
+   * EmailJS Contact Form
+   */
+  (function() {
+    emailjs.init('KBJhXOxhFpcHYmmx3');
+
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const loadingDiv = contactForm.querySelector('.loading');
+        const errorDiv = contactForm.querySelector('.error-message');
+        const sentDiv = contactForm.querySelector('.sent-message');
+
+        // Show loading
+        submitButton.disabled = true;
+        loadingDiv.style.display = 'block';
+        errorDiv.style.display = 'none';
+        sentDiv.style.display = 'none';
+
+        // Get form data
+        const formData = new FormData(contactForm);
+        const templateParams = {
+          name: formData.get('name'),
+          email: formData.get('email'),
+          subject: formData.get('subject'),
+          message: formData.get('message')
+        };
+
+        // Send email
+        emailjs.send('service_wc7xlb5', 'template_14yinyh', templateParams)
+          .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+            loadingDiv.style.display = 'none';
+            sentDiv.style.display = 'block';
+            contactForm.reset();
+          }, function(error) {
+            console.log('FAILED...', error);
+            loadingDiv.style.display = 'none';
+            errorDiv.style.display = 'block';
+            errorDiv.textContent = 'Failed to send message. Please try again.';
+          })
+          .finally(function() {
+            submitButton.disabled = false;
+          });
+      });
+    }
+  })();
+
 })();

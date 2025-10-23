@@ -441,6 +441,18 @@
               </div>
             </div><!-- End Portfolio Item -->
 
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <div class="portfolio-content h-100">
+                <img src="assets/img/services/Amazon-clone.png" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Amazon Clone</h4>
+                  <p><strong>Type:</strong> Frontend Application<br><strong>Framework:</strong> React.js<br><strong>Description:</strong> Amazon-inspired e-commerce platform with product listings and shopping cart</p>
+                  <a href="#amazon-modal" title="Amazon Clone Description" class="preview-link" data-bs-toggle="modal"><i class="bi bi-zoom-in"></i></a>
+                  <a href="https://github.com/BurukeBMT/Amazon-Clone-2025" title="GitHub Repository" class="details-link" target="_blank"><i class="bi bi-github"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
           </div><!-- End Portfolio Container -->
 
         </div>
@@ -564,7 +576,7 @@
           </div>
 
           <div class="col-lg-7">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            <form id="contact-form" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
               <div class="row gy-4">
 
                 <div class="col-md-6">
@@ -665,6 +677,35 @@
     </div>
   </div>
 
+  <div class="modal fade" id="amazon-modal" tabindex="-1" aria-labelledby="amazonModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" style="background-color: #000000; color: #ffffff;">
+        <div class="modal-header" style="background-color: #000000; border-bottom: 1px solid #333;">
+          <h5 class="modal-title" id="amazonModalLabel" style="color: #ffffff;">Amazon Clone</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="background-color: #000000; color: #ffffff;">
+          <img src="assets/img/services/Amazon-clone.png" class="img-fluid mb-3" alt="Amazon Clone">
+          <p>A fully responsive Amazon-inspired e-commerce platform that replicates the popular online retailer's user interface and functionality. Features product listings, shopping cart, user authentication, and a modern shopping experience.</p>
+          <h6>Key Features:</h6>
+          <ul>
+            <li>Responsive design matching Amazon's UI</li>
+            <li>Product catalog and listings</li>
+            <li>Shopping cart functionality</li>
+            <li>User authentication and profiles</li>
+            <li>Modern e-commerce interface</li>
+          </ul>
+          <h6>Technologies Used:</h6>
+          <p>React.js, Firebase, CSS3, JavaScript, Responsive Design</p>
+          <div class="mt-3">
+            <a href="https://amazon-bmt.netlify.app/" class="btn" style="background-color: #008000; color: #ffffff; border: 1px solid #008000;" target="_blank">View Live Demo</a>
+            <a href="https://github.com/BurukeBMT/Amazon-Clone-2025" class="btn" style="border: 1px solid #008000; color: #008000;" target="_blank">View Source Code</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer id="footer" class="footer position-relative light-background">
       <div class="text-center">
         <h3 class="sitename">Biruk Maedot</h3>
@@ -694,6 +735,9 @@
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- EmailJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
