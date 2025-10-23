@@ -215,7 +215,7 @@
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
       contactForm.addEventListener('submit', function(event) {
-        event.preventDefault();
+        event.preventDefault(); // Always prevent default form submission
 
         const submitButton = contactForm.querySelector('button[type="submit"]');
         const loadingDiv = contactForm.querySelector('.loading');
@@ -237,7 +237,12 @@
           method: 'POST',
           body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
         .then(data => {
           loadingDiv.style.display = 'none';
           if (data.error === 0) {
