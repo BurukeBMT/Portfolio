@@ -220,41 +220,59 @@
       contactForm.addEventListener('submit', function(event) {
         event.preventDefault(); // Always prevent default form submission
 
-        const submitButton = contactForm.querySelector('button[type="submit"]');
-        const loadingDiv = contactForm.querySelector('.loading');
-        const errorDiv = contactForm.querySelector('.error-message');
-        const sentDiv = contactForm.querySelector('.sent-message');
+        try {
+          const submitButton = contactForm.querySelector('button[type="submit"]');
+          const loadingDiv = contactForm.querySelector('.loading');
+          const errorDiv = contactForm.querySelector('.error-message');
+          const sentDiv = contactForm.querySelector('.sent-message');
 
-        // Show loading
-        submitButton.disabled = true;
-        loadingDiv.style.display = 'block';
-        errorDiv.style.display = 'none';
-        sentDiv.style.display = 'none';
+          // Check if required elements exist
+          if (!submitButton || !loadingDiv || !errorDiv || !sentDiv) {
+            console.error('Required form elements not found');
+            return;
+          }
 
-        // Prepare template parameters
-        const templateParams = {
-          name: contactForm.name.value,
-          email: contactForm.email.value,
-          subject: contactForm.subject.value,
-          message: contactForm.message.value,
-          time: new Date().toLocaleString(),
-        };
+          // Show loading
+          submitButton.disabled = true;
+          loadingDiv.style.display = 'block';
+          errorDiv.style.display = 'none';
+          sentDiv.style.display = 'none';
 
-        // Send email using EmailJS
-        emailjs
-          .send('service_qbyqa6a', 'template_iow30uf', templateParams)
-          .then(function(response) {
-            loadingDiv.style.display = 'none';
-            submitButton.disabled = false;
-            sentDiv.style.display = 'block';
-            contactForm.reset();
-          })
-          .catch(function(error) {
-            loadingDiv.style.display = 'none';
-            submitButton.disabled = false;
-            errorDiv.textContent = 'An error occurred. Please try again.';
-            errorDiv.style.display = 'block';
-          });
+          // Prepare template parameters
+          const templateParams = {
+            name: contactForm.name.value,
+            email: contactForm.email.value,
+            subject: contactForm.subject.value,
+            message: contactForm.message.value,
+            time: new Date().toLocaleString(),
+          };
+
+          // Send email using EmailJS
+          emailjs
+            .send('service_qbyqa6a', 'template_iow30uf', templateParams)
+            .then(function(response) {
+              try {
+                loadingDiv.style.display = 'none';
+                submitButton.disabled = false;
+                sentDiv.style.display = 'block';
+                contactForm.reset();
+              } catch (innerError) {
+                console.error('Error in success handler:', innerError);
+              }
+            })
+            .catch(function(error) {
+              try {
+                loadingDiv.style.display = 'none';
+                submitButton.disabled = false;
+                errorDiv.textContent = 'An error occurred. Please try again.';
+                errorDiv.style.display = 'block';
+              } catch (innerError) {
+                console.error('Error in error handler:', innerError);
+              }
+            });
+        } catch (error) {
+          console.error('Error in form submission:', error);
+        }
       });
     }
   })();
