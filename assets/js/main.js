@@ -249,7 +249,7 @@
 
           // Send email using EmailJS
           emailjs
-            .send('service_qbyqa6a', 'template_iow30uf', templateParams)
+            .send('service_wc7xlb5', 'template_14yinyh', templateParams)
             .then(function(response) {
               try {
                 loadingDiv.style.display = 'none';
