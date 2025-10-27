@@ -209,9 +209,12 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
   /**
-   * Contact Form Handler
+   * Contact Form Handler using EmailJS
    */
   (function() {
+    // Initialize EmailJS with your public key
+    emailjs.init('KBJhXOxhFpcHYmmx3'); // Replace with your actual EmailJS public key
+
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
       contactForm.addEventListener('submit', function(event) {
@@ -228,40 +231,30 @@
         errorDiv.style.display = 'none';
         sentDiv.style.display = 'none';
 
-        // Get form data
-        const formData = new FormData(contactForm);
-        formData.append('ajax', '1');
+        // Prepare template parameters
+        const templateParams = {
+          name: contactForm.name.value,
+          email: contactForm.email.value,
+          subject: contactForm.subject.value,
+          message: contactForm.message.value,
+          time: new Date().toLocaleString(),
+        };
 
-        // Send via fetch to PHP backend
-        fetch('forms/contact.php', {
-          method: 'POST',
-          body: formData
-        })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          loadingDiv.style.display = 'none';
-          if (data.error === 0) {
+        // Send email using EmailJS
+        emailjs
+          .send('service_wc7xlb5', 'template_14yinyh', templateParams)
+          .then(function(response) {
+            loadingDiv.style.display = 'none';
+            submitButton.disabled = false;
             sentDiv.style.display = 'block';
             contactForm.reset();
-          } else {
+          })
+          .catch(function(error) {
+            loadingDiv.style.display = 'none';
+            submitButton.disabled = false;
+            errorDiv.textContent = 'An error occurred. Please try again.';
             errorDiv.style.display = 'block';
-            errorDiv.textContent = data.message || 'Failed to send message. Please try again.';
-          }
-        })
-        .catch(error => {
-          console.log('FAILED...', error);
-          loadingDiv.style.display = 'none';
-          errorDiv.style.display = 'block';
-          errorDiv.textContent = 'Failed to send message. Please try again.';
-        })
-        .finally(function() {
-          submitButton.disabled = false;
-        });
+          });
       });
     }
   })();
