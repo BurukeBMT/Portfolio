@@ -213,7 +213,7 @@
    */
   (function() {
     // Initialize EmailJS with your public key
-    emailjs.init('KBJhXOxhFpcHYmmx3'); // Replace with your actual EmailJS public key
+    emailjs.init('sYg8P5P0PQCEqN-6q');
 
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
@@ -242,7 +242,7 @@
 
         // Send email using EmailJS
         emailjs
-          .send('service_wc7xlb5', 'template_14yinyh', templateParams)
+          .send('service_qbyqa6a', 'template_iow30uf', templateParams)
           .then(function(response) {
             loadingDiv.style.display = 'none';
             submitButton.disabled = false;
