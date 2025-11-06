@@ -1,5 +1,0 @@
-- [x] Update About section with enhanced description including Python, TensorFlow, scikit-learn, and certifications
-- [x] Update Interests section to match provided list
-- [x] Update Resume Education with correct dates and add certifications
-- [x] Add new professional experience entries for Afronex Tech Hub and Zindi
-- [x] Update projects/achievements to include Sentiment Analysis Model and Hotel Management System
